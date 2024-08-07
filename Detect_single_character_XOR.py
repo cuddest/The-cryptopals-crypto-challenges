@@ -46,25 +46,24 @@ def calculate_frenquency(char):
     return score
 
 
-def xor_brute_force(hex_string):
-    hex_string_byte = bytes.fromhex(hex_string)
-    print(hex_string_byte)
+def xor_brute_force_with_file(hex_strings_file):
+    hex_string_list = []
+    with open(hex_strings_file, "r") as file:
+        for line in file:
+            hex_string_list.append(line.strip())
     highest_frequency = {"key": 0, "score": 0.0, "text": "blalala"}
-    for i in range(256):
-        result = xor_to_one_char(hex_string_byte, i)
-        result_frenquency = calculate_frenquency(result)
-        if result_frenquency > highest_frequency["score"]:
-            highest_frequency["key"] = i
-            highest_frequency["score"] = result_frenquency
-            highest_frequency["text"] = result
+    for hex_string in hex_string_list:
+        hex_string_byte = bytes.fromhex(hex_string)
+        for i in range(256):
+            result = xor_to_one_char(hex_string_byte, i)
+            result_frenquency = calculate_frenquency(result)
+            if result_frenquency > highest_frequency["score"]:
+                highest_frequency["key"] = i
+                highest_frequency["score"] = result_frenquency
+                highest_frequency["text"] = result
     return highest_frequency
 
 
-print(
-    xor_brute_force(
-        "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
-    )
-)
+print(xor_brute_force_with_file("DetectSingleXorTxtFile.txt"))
 # here's the result after running the code :
-# {'key': 88, 'score': 2.2641049, 'text': b"Cooking MC's like a pound of bacon"}
-# https://www.youtube.com/watch?v=rog8ou-ZepE
+# {'key': 53, 'score': 2.0881317999999998, 'text': b'Now that the party is jumping\n'}
