@@ -1,6 +1,7 @@
+#my own attempt to implement rc4 using Python-3.
 MOD = 256
 
-def KSA(key):
+def key_Scheduling_algorithm(key):
     key_length = len(key)
     S = list(range(MOD))  
     j = 0
@@ -9,7 +10,7 @@ def KSA(key):
         S[i], S[j] = S[j], S[i]  
     return S
     
-def PRGA(S):
+def psudo_random_generation_algorithm(S):
     i = 0
     j = 0
     while True:
@@ -20,8 +21,8 @@ def PRGA(S):
         yield K 
 
 def get_keystream(key):
-    S = KSA(key)
-    return PRGA(S)
+    S = key_Scheduling_algorithm(key)
+    return psudo_random_generation_algorithm(S)
 
 def encrypt(key, text):
     if isinstance(key, str):
